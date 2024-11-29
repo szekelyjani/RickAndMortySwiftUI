@@ -49,10 +49,8 @@ struct CharacterListView: View {
             .padding()
             .navigationTitle("Characters")
         }
-        .onAppear {
-            Task {
-                await vm.getCharacters()
-            }
+        .task {
+            await vm.getCharacters()
         }
     }
     

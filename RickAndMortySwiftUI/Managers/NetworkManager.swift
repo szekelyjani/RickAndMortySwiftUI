@@ -33,4 +33,21 @@ final class NetworkManager {
             throw GetAllCharactersResponseError.invalidData
         }
     }
+    
+    func getLocations(from urlString: String) async throws -> GetLocationsResponse {
+        guard let url = URL(string: urlString) else {
+            throw GetAllCharactersResponseError.invalidURL
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw GetAllCharactersResponseError.invalidResponse
+        }
+        
+        do {
+            return try decoder.decode(GetLocationsResponse.self, from: data)
+        } catch {
+            throw GetAllCharactersResponseError.invalidData
+        }
+    }
 }
