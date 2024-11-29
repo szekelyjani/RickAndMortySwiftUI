@@ -21,6 +21,11 @@ struct RickAndMortySwiftUIApp: App {
                     .tabItem {
                         Label("Locations", systemImage: "globe")
                     }
+                
+                EpisodeListView()
+                    .tabItem {
+                        Label("Episodes", systemImage: "tv")
+                    }
             }
         }
     }
