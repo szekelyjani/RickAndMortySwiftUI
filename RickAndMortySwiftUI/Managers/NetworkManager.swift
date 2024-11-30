@@ -17,37 +17,19 @@ final class NetworkManager {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    func getAllCharacters(from urlString: String) async throws -> GetAllCharactersResponse {
+    func fetchData<T: Codable>(from urlString: String) async throws -> T {
         guard let url = URL(string: urlString) else {
-            throw GetAllCharactersResponseError.invalidURL
+            throw NetworkError.invalidURL
         }
         let (data, response) = try await URLSession.shared.data(from: url)
-        
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw GetAllCharactersResponseError.invalidResponse
+            throw NetworkError.invalidResponse
         }
         
         do {
-            return try decoder.decode(GetAllCharactersResponse.self, from: data)
+            return try decoder.decode(T.self, from: data)
         } catch {
-            throw GetAllCharactersResponseError.invalidData
-        }
-    }
-    
-    func getLocations(from urlString: String) async throws -> GetLocationsResponse {
-        guard let url = URL(string: urlString) else {
-            throw GetAllCharactersResponseError.invalidURL
-        }
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw GetAllCharactersResponseError.invalidResponse
-        }
-        
-        do {
-            return try decoder.decode(GetLocationsResponse.self, from: data)
-        } catch {
-            throw GetAllCharactersResponseError.invalidData
+            throw NetworkError.failedToDecode
         }
     }
 }

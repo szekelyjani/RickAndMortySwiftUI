@@ -9,7 +9,6 @@ import Foundation
 
 @MainActor
 final class LocationListViewViewModel: ObservableObject {
-    
     @Published var loadingState: LoadingState = .na
     @Published var locations: [RMLocation] = []
     @Published var searchText = ""
@@ -18,19 +17,19 @@ final class LocationListViewViewModel: ObservableObject {
     func getAllLocations() async {
         locations.removeAll()
         let endpoint = "https://rickandmortyapi.com/api/location"
-        await getLocationList(endpoint)
+        await getLocationList(from: endpoint)
     }
     
     func getMoreLocations() async {
         if let nextPageUrl, loadingState == .finished {
-            await getLocationList(nextPageUrl)
+            await getLocationList(from: nextPageUrl)
         }
     }
     
-    private func getLocationList(_ endpoint: String) async {
+    private func getLocationList(from endpoint: String) async {
         loadingState = .loading
         do {
-            let result = try await NetworkManager.shared.getLocations(from: endpoint)
+            let result: GetLocationsResponse = try await NetworkManager.shared.fetchData(from: endpoint)
             nextPageUrl = result.info.next
             locations.append(contentsOf: result.results)
             loadingState = .finished
@@ -46,7 +45,7 @@ final class LocationListViewViewModel: ObservableObject {
         loadingState = .loading
         locations.removeAll()
         let enpoint = "https://rickandmortyapi.com/api/location/?name=\(searchText)"
-        await getLocationList(enpoint)
+        await getLocationList(from: enpoint)
     }
     
 }
