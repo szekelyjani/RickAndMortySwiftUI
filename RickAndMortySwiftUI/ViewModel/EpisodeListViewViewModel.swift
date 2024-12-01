@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 class EpisodeListViewViewModel: ObservableObject {
-    @Published var episodes: [Episode] = []
+    @Published var episodes: [RMEpisode] = []
     @Published var loadingState: LoadingState = .na
     var nextPageUrl: String?
     

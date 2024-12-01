@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EpisodeListCell: View {
-    let episode: Episode
+    let episode: RMEpisode
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -23,5 +23,5 @@ struct EpisodeListCell: View {
 }
 
 #Preview {
-    EpisodeListCell(episode: Episode.test_episode)
+    EpisodeListCell(episode: RMEpisode.test_episode)
 }

@@ -17,6 +17,6 @@ struct GetEpisodesResponse: Codable {
     }
     
     let info: Info
-    let results: [Episode]
+    let results: [RMEpisode]
     
 }

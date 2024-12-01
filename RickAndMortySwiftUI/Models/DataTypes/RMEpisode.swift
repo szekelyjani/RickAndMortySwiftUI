@@ -1,5 +1,5 @@
 //
-//  Episode.swift
+//  RMEpisode.swift
 //  RickAndMortySwiftUI
 //
 //  Created by Szekely Janos on 2024. 11. 29..
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Episode: Codable, Identifiable {
+struct RMEpisode: Codable, Identifiable {
     let id: Int
     let name: String
     let airDate: String
@@ -16,7 +16,7 @@ struct Episode: Codable, Identifiable {
     let url: String
     let created: String
     
-    static let test_episode = Episode(id: 1,
+    static let test_episode = RMEpisode(id: 1,
                                         name: "Pilot",
                                         airDate: "December 2, 2013",
                                         episode: "S01E01",

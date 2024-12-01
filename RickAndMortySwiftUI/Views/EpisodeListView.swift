@@ -14,7 +14,11 @@ struct EpisodeListView: View {
         NavigationStack {
             List {
                 ForEach(vm.episodes) { episode in
-                    EpisodeListCell(episode: episode)
+                    NavigationLink {
+                        EpisodeDetailView(episode: episode)
+                    } label: {
+                        EpisodeListCell(episode: episode)
+                    }
                 }
                 switch vm.loadingState {
                 case .loading:
