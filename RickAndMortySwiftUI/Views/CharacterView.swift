@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CharacterView: View {
+    @State var image: UIImage? = nil
     let character: RMCharacter
     var statusColor: Color {
         switch character.status {
@@ -22,16 +23,19 @@ struct CharacterView: View {
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: character.image)) { image in
-                image
+            if let image {
+                Image(uiImage: image)
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .clipShape(Circle())
-            } placeholder: {
-                Circle()
-                    .tint(.secondary)
+                    .frame(width: 100)
+            } else {
+                Image(.avatar)
+                    .resizable()
+                    .scaledToFill()
+                    .clipShape(Circle())
+                    .frame(width: 100)
             }
-            .frame(width: 100)
             
             VStack(alignment: .leading) {
                 Text(character.name)
@@ -47,6 +51,9 @@ struct CharacterView: View {
                         .fontWeight(.light)
                 }
             }
+        }
+        .task {
+            self.image = await NetworkManager.shared.downloadImage(from: character.image)
         }
     }
 }

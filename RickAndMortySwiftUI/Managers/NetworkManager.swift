@@ -5,7 +5,7 @@
 //  Created by Szekely Janos on 2024. 11. 24..
 //
 
-import Foundation
+import SwiftUI
 
 final class NetworkManager {
     
@@ -31,5 +31,27 @@ final class NetworkManager {
         } catch {
             throw NetworkError.failedToDecode
         }
+    }
+    
+    func downloadImage(from urlString: String) async -> UIImage? {
+        let cacheKey = NSString(string: urlString)
+        
+        if let image = ImageCacheManager.shared.getImage(for: urlString) {
+            return image
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            guard let image = UIImage(data: data) else { return nil }
+            ImageCacheManager.shared.saveImage(image, for: urlString)
+            return image
+        } catch {
+            return nil
+        }
+        
     }
 }
