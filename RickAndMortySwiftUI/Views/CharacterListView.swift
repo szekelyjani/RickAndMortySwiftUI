@@ -21,7 +21,7 @@ struct CharacterListView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(vm.characters) { character in
                         NavigationLink {
-                            Text("\(character.name)")
+                            CharacterDetailView(character: character)
                         } label: {
                             CharacterListCell(character: character)
                         }
