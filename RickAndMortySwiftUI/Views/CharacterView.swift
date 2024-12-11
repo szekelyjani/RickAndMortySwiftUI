@@ -9,16 +9,6 @@ import SwiftUI
 
 struct CharacterView: View {
     let character: RMCharacter
-    var statusColor: Color {
-        switch character.status {
-        case .alive:
-                .green
-        case .dead:
-                .red
-        case .unknown:
-                .yellow
-        }
-    }
     
     var body: some View {
         HStack {
@@ -34,7 +24,7 @@ struct CharacterView: View {
                 HStack {
                     Circle()
                         .frame(width: 10)
-                        .foregroundStyle(statusColor)
+                        .foregroundStyle(character.statusColor)
                     Text(character.status.text)
                         .font(.title3)
                         .fontWeight(.light)

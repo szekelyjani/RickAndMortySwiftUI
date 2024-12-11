@@ -13,7 +13,12 @@ struct CharacterListCell: View {
     var body: some View {
         VStack {
             ImageView(imageUrl: character.image)
+                .frame(width: 125)
                 .clipShape(Circle())
+                .background(
+                    Circle()
+                        .stroke(character.statusColor, lineWidth: 3)
+                )
             
             /*@START_MENU_TOKEN@*/Text(character.name)/*@END_MENU_TOKEN@*/
                 .font(.title3)

@@ -5,7 +5,7 @@
 //  Created by Szekely Janos on 2024. 11. 26..
 //
 
-import Foundation
+import SwiftUI
 
 struct RMCharacter: Codable, Identifiable {
     let id: Int
@@ -20,6 +20,17 @@ struct RMCharacter: Codable, Identifiable {
     let episode: [String]
     let url: String
     let created: String
+    
+    var statusColor: Color {
+        switch status {
+        case .alive:
+                .green
+        case .dead:
+                .red
+        case .unknown:
+                .yellow
+        }
+    }
     
     static let Rick = RMCharacter(
         id: 1,
