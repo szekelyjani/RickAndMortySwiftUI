@@ -23,7 +23,7 @@ struct EpisodeDetailView: View {
                     List {
                         ForEach(vm.characters) { character in
                             NavigationLink {
-                                Text("\(character.name)")
+                                CharacterDetailView(character: character)
                             } label: {
                                 CharacterView(character: character)
                             }
