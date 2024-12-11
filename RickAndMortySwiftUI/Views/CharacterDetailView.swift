@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CharacterDetailView: View {
     @StateObject private var viewMopdel = CharacterDetailViewViewModel()
-    @State private var image: UIImage?
     let character: RMCharacter
     
     var dateValue: String {
@@ -23,15 +22,7 @@ struct CharacterDetailView: View {
         
         NavigationStack {
             Form {
-                if let image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                } else {
-                    Image(.avatar)
-                        .resizable()
-                        .scaledToFill()
-                }
+                ImageView(imageUrl: character.image)
                 
                 Section("Personal information") {
                     FromCell(title: "Status", description: character.status.rawValue)
@@ -51,9 +42,7 @@ struct CharacterDetailView: View {
             .navigationTitle(character.name)
             .navigationBarTitleDisplayMode(.inline)
             .task {
-                image = await NetworkManager.shared.downloadImage(from: character.image)
                 await viewMopdel.getRelatedEpisodes(for: character)
-                print(character.created)
             }
         }
     }
