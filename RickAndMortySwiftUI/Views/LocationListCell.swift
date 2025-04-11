@@ -9,15 +9,15 @@ import SwiftUI
 
 struct LocationListCell: View {
     let location: RMLocation
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(location.name)
                 .font(.title2)
-            
+
             Text(location.type)
                 .font(.title3)
-            
+
             Text(location.dimension)
                 .font(.footnote)
         }
@@ -25,5 +25,5 @@ struct LocationListCell: View {
 }
 
 #Preview {
-    LocationListCell(location: RMLocation.test_location)
+    LocationListCell(location: RMLocation.testLocation)
 }

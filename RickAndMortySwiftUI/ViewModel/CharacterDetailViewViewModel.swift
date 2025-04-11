@@ -15,13 +15,13 @@ class CharacterDetailViewViewModel: ObservableObject {
         formatter.timeZone = .current
         return formatter
     }()
-    
+
     let shartDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }()
-    
+
     @MainActor
     func getRelatedEpisodes(for character: RMCharacter) async {
         let list = character.episode

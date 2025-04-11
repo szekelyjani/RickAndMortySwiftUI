@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageView: View {
     @State var image: UIImage?
     let imageUrl: String
-    
+
     var body: some View {
         VStack {
             if let image {
@@ -27,7 +27,6 @@ struct ImageView: View {
             image = await NetworkManager.shared.downloadImage(from: imageUrl)
         }
     }
-        
 }
 
 #Preview {

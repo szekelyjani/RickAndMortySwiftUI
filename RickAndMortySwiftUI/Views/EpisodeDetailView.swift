@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EpisodeDetailView: View {
-    @StateObject private var vm = EpisodeDetailViewViewModel()
+    @StateObject private var viewModel = EpisodeDetailViewViewModel()
     let episode: RMEpisode
     var body: some View {
         NavigationStack {
@@ -18,10 +18,10 @@ struct EpisodeDetailView: View {
                     EpisodeDetailCell(title: "Air date", description: episode.airDate)
                     EpisodeDetailCell(title: "Episode", description: episode.episode)
                 }
-                
+
                 Section("Characters") {
                     List {
-                        ForEach(vm.characters) { character in
+                        ForEach(viewModel.characters) { character in
                             NavigationLink {
                                 CharacterDetailView(character: character)
                             } label: {
@@ -35,19 +35,19 @@ struct EpisodeDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
-            await vm.getRelatedCharacters(for: episode)
+            await viewModel.getRelatedCharacters(for: episode)
         }
     }
 }
 
 #Preview {
-    EpisodeDetailView(episode: RMEpisode.test_episode)
+    EpisodeDetailView(episode: RMEpisode.testEpisode)
 }
 
 struct EpisodeDetailCell: View {
     let title: String
     let description: String
-    
+
     var body: some View {
         HStack {
             Text(title)

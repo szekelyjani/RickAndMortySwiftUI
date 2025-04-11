@@ -20,7 +20,7 @@ class CharacterListViewViewModel: ObservableObject {
     @Published var loadingState: LoadingState = .na
     var nextPageUrl: String?
     var prevPageUrl: String?
-    
+
     func getCharacters() async {
         characters.removeAll()
         let endpoint = "https://rickandmortyapi.com/api/character"
@@ -31,7 +31,7 @@ class CharacterListViewViewModel: ObservableObject {
             await getAllCharacters(from: nextPageUrl)
         }
     }
-    
+
     func getAllCharacters(from endpoint: String) async {
         loadingState = .loading
         do {
