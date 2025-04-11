@@ -8,15 +8,14 @@
 import SwiftUI
 
 final class NetworkManager {
-    
     static let shared = NetworkManager()
     let decoder = JSONDecoder()
-    
+
     init() {
         decoder.dateDecodingStrategy = .iso8601
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
-    
+
     func fetchData<T: Codable>(from urlString: String) async throws -> T {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
@@ -25,25 +24,25 @@ final class NetworkManager {
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw NetworkError.invalidResponse
         }
-        
+
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
             throw NetworkError.failedToDecode
         }
     }
-    
+
     func downloadImage(from urlString: String) async -> UIImage? {
-        let cacheKey = NSString(string: urlString)
-        
+        _ = NSString(string: urlString)
+
         if let image = ImageCacheManager.shared.getImage(for: urlString) {
             return image
         }
-        
+
         guard let url = URL(string: urlString) else {
             return nil
         }
-        
+
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             guard let image = UIImage(data: data) else { return nil }
@@ -52,6 +51,5 @@ final class NetworkManager {
         } catch {
             return nil
         }
-        
     }
 }

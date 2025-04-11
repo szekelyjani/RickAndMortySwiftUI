@@ -8,28 +8,28 @@
 import SwiftUI
 
 struct EpisodeListView: View {
-    @StateObject private var vm = EpisodeListViewViewModel()
-    
+    @StateObject private var viewModel = EpisodeListViewViewModel()
+
     var body: some View {
         NavigationStack {
             List {
-                ForEach(vm.episodes) { episode in
+                ForEach(viewModel.episodes) { episode in
                     NavigationLink {
                         EpisodeDetailView(episode: episode)
                     } label: {
                         EpisodeListCell(episode: episode)
                     }
                 }
-                switch vm.loadingState {
+                switch viewModel.loadingState {
                 case .loading:
                     ProgressView()
                         .frame(width: 100, height: 100)
                 case .finished:
-                    if vm.nextPageUrl != nil {
+                    if viewModel.nextPageUrl != nil {
                         Color.gray.frame(height: 100)
                             .onAppear {
                                 Task {
-                                    await vm.getMoreEpisodes()
+                                    await viewModel.getMoreEpisodes()
                                 }
                             }
                     }
@@ -41,7 +41,7 @@ struct EpisodeListView: View {
             .listStyle(.automatic)
         }
         .task {
-            await vm.getEpisodes()
+            await viewModel.getEpisodes()
         }
     }
 }

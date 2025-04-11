@@ -15,8 +15,8 @@ struct RMLocation: Codable, Identifiable {
     let residents: [String]
     let url: String
     let created: String
-    
-    static let test_location = RMLocation(id: 1,
+
+    static let testLocation = RMLocation(id: 1,
                                           name: "Earth (C-137)",
                                           type: "Planet",
                                           dimension: "Dimension C-137",

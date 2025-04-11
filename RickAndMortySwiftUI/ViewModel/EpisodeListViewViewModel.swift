@@ -10,21 +10,21 @@ import Foundation
 @MainActor
 class EpisodeListViewViewModel: ObservableObject {
     @Published var episodes: [RMEpisode] = []
-    @Published var loadingState: LoadingState = .na
+    @Published var loadingState: LoadingState = .nonApplicable
     var nextPageUrl: String?
-    
+
     func getEpisodes() async {
         episodes.removeAll()
         let endpoint = "https://rickandmortyapi.com/api/episode"
         await getEpisodes(from: endpoint)
     }
-    
+
     func getMoreEpisodes() async {
         if let nextPageUrl, loadingState == .finished {
             await getEpisodes(from: nextPageUrl)
         }
     }
-    
+
     private func getEpisodes(from url: String) async {
         loadingState = .loading
         do {

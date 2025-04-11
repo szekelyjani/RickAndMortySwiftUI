@@ -9,18 +9,18 @@ import SwiftUI
 
 struct CharacterView: View {
     let character: RMCharacter
-    
+
     var body: some View {
         HStack {
             ImageView(imageUrl: character.image)
                 .clipShape(Circle())
                 .frame(width: 100)
-            
+
             VStack(alignment: .leading) {
                 Text(character.name)
                     .font(.title2)
                     .fontWeight(.medium)
-                
+
                 HStack {
                     Circle()
                         .frame(width: 10)

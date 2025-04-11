@@ -20,7 +20,7 @@ struct RMCharacter: Codable, Identifiable {
     let episode: [String]
     let url: String
     let created: String
-    
+
     var statusColor: Color {
         switch status {
         case .alive:
@@ -31,7 +31,7 @@ struct RMCharacter: Codable, Identifiable {
                 .yellow
         }
     }
-    
+
     static let Rick = RMCharacter(
         id: 1,
         name: "Rick Sanchez",

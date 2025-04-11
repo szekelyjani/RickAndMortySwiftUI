@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct CharacterListView: View {
-    @StateObject private var vm = CharacterListViewViewModel()
-    
+    @StateObject private var viewModel = CharacterListViewViewModel()
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(vm.characters) { character in
+                    ForEach(viewModel.characters) { character in
                         NavigationLink {
                             CharacterDetailView(character: character)
                         } label: {
@@ -29,16 +29,16 @@ struct CharacterListView: View {
                     }
                     .padding(.horizontal, 4)
                 }
-                switch vm.loadingState {
+                switch viewModel.loadingState {
                 case .loading:
                     ProgressView()
                         .frame(width: 100, height: 100)
                 case .finished:
-                    if vm.nextPageUrl != nil {
+                    if viewModel.nextPageUrl != nil {
                         Color.gray.frame(height: 100)
                             .onAppear {
                                 Task {
-                                    await vm.getNextCharacters()
+                                    await viewModel.getNextCharacters()
                                 }
                             }
                     }
@@ -50,10 +50,9 @@ struct CharacterListView: View {
             .navigationTitle("Characters")
         }
         .task {
-            await vm.getCharacters()
+            await viewModel.getCharacters()
         }
     }
-    
 }
 
 #Preview {

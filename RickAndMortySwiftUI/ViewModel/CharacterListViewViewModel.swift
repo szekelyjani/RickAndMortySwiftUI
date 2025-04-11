@@ -8,7 +8,7 @@
 import Foundation
 
 enum LoadingState {
-    case na
+    case nonApplicable
     case loading
     case finished
     case failed
@@ -17,10 +17,10 @@ enum LoadingState {
 @MainActor
 class CharacterListViewViewModel: ObservableObject {
     @Published var characters: [RMCharacter] = []
-    @Published var loadingState: LoadingState = .na
+    @Published var loadingState: LoadingState = .nonApplicable
     var nextPageUrl: String?
     var prevPageUrl: String?
-    
+
     func getCharacters() async {
         characters.removeAll()
         let endpoint = "https://rickandmortyapi.com/api/character"
@@ -31,7 +31,7 @@ class CharacterListViewViewModel: ObservableObject {
             await getAllCharacters(from: nextPageUrl)
         }
     }
-    
+
     func getAllCharacters(from endpoint: String) async {
         loadingState = .loading
         do {

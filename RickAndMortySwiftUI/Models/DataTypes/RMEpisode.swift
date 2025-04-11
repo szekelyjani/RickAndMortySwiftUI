@@ -15,8 +15,8 @@ struct RMEpisode: Codable, Identifiable {
     let characters: [String]
     let url: String
     let created: String
-    
-    static let test_episode = RMEpisode(id: 1,
+
+    static let testEpisode = RMEpisode(id: 1,
                                         name: "Pilot",
                                         airDate: "December 2, 2013",
                                         episode: "S01E01",

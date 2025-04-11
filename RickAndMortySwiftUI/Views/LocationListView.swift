@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct LocationListView: View {
-    @StateObject private var vm = LocationListViewViewModel()
-    
+    @StateObject private var viewModel = LocationListViewViewModel()
+
     var body: some View {
         NavigationStack {
             List {
-                ForEach(vm.locations) { location in
+                ForEach(viewModel.locations) { location in
                     NavigationLink {
                         LocationListCell(location: location)
                     } label: {
                         LocationListCell(location: location)
                     }
                 }
-                switch vm.loadingState {
-                case .na:
+                switch viewModel.loadingState {
+                case .nonApplicable:
                     if #available(iOS 17.0, *) {
                         ContentUnavailableView.search
                     } else {
@@ -31,11 +31,11 @@ struct LocationListView: View {
                     ProgressView()
                         .frame(width: 100, height: 100)
                 case .finished:
-                    if vm.nextPageUrl != nil {
+                    if viewModel.nextPageUrl != nil {
                         Color.gray.frame(height: 100)
                             .onAppear {
                                 Task {
-                                    await vm.getMoreLocations()
+                                    await viewModel.getMoreLocations()
                                 }
                             }
                     }
@@ -46,17 +46,17 @@ struct LocationListView: View {
             .navigationTitle("Locations")
             .listStyle(.automatic)
             .searchable(
-                text: $vm.searchText,
+                text: $viewModel.searchText,
                 placement: .automatic,
                 prompt: "Search Locations"
             )
         }
         .task {
-            await vm.getAllLocations()
+            await viewModel.getAllLocations()
         }
         .onSubmit(of: .search) {
             Task {
-                await vm.search()
+                await viewModel.search()
             }
         }
     }

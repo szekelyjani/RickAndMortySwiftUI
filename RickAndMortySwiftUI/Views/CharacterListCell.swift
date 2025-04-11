@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CharacterListCell: View {
     let character: RMCharacter
-    
+
     var body: some View {
         VStack {
             ImageView(imageUrl: character.image)
@@ -19,7 +19,6 @@ struct CharacterListCell: View {
                     Circle()
                         .stroke(character.statusColor, lineWidth: 3)
                 )
-            
             /*@START_MENU_TOKEN@*/Text(character.name)/*@END_MENU_TOKEN@*/
                 .font(.title3)
                 .lineLimit(1)

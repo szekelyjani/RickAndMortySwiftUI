@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 class EpisodeDetailViewViewModel: ObservableObject {
     @Published var characters: [RMCharacter] = []
-    
+
     func getRelatedCharacters(for episode: RMEpisode) async {
         characters.removeAll()
         for url in episode.characters {

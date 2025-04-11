@@ -10,20 +10,19 @@ import SwiftUI
 struct CharacterDetailView: View {
     @StateObject private var viewMopdel = CharacterDetailViewViewModel()
     let character: RMCharacter
-    
+
     var dateValue: String {
         if let date = viewMopdel.dateFormatter.date(from: character.created) {
             return viewMopdel.shartDateFormatter.string(from: date)
         }
         return "N/A"
     }
-    
+
     var body: some View {
-        
         NavigationStack {
             Form {
                 ImageView(imageUrl: character.image)
-                
+
                 Section("Personal information") {
                     FromCell(title: "Status", description: character.status.rawValue)
                     FromCell(title: "Gender", description: character.gender.rawValue)
@@ -32,7 +31,7 @@ struct CharacterDetailView: View {
                     FromCell(title: "Created", description: dateValue)
                     FromCell(title: "Episodes", description: "\(character.episode.count)")
                 }
-                
+
                 if !viewMopdel.episodes.isEmpty {
                     Section("Related episodes") {
                         episodeList
@@ -46,7 +45,7 @@ struct CharacterDetailView: View {
             }
         }
     }
-    
+
     private var episodeList: some View {
         ScrollView(.horizontal) {
             LazyHStack(spacing: 15) {
@@ -66,7 +65,7 @@ struct CharacterDetailView: View {
 struct FromCell: View {
     let title: String
     let description: String
-    
+
     var body: some View {
         HStack {
             Text(title)
